@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Hub - Stories & Art Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            /* Default pastel background */
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+        }
+
+        /* Dark Mode */
+        .theme-dark {
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 50%, #74b9ff 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-dark header {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        .theme-dark .logo {
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #2d3436;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .theme-dark .nav-links a {
+            color: #ddd;
+        }
+
+        .theme-dark .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-options {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            margin-right: 1rem;
+        }
+
+        .theme-switch {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid #2d3436;
+            color: #2d3436;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .theme-switch:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .theme-dark .theme-switch {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: white;
+            color: white;
+        }
+
+        .theme-dark .theme-switch:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #2d3436;
+            color: #2d3436;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 50px;
+            font-weight: 500;
+        }
+
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .lang-switch.active {
+            background: rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+        }
+
+        .theme-dark .lang-switch {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: white;
+            color: white;
+        }
+
+        .theme-dark .lang-switch:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-dark .lang-switch.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2d3436;
+            transition: all 0.3s ease;
+        }
+
+        .theme-dark .hero {
+            color: #ddd;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            color: #2d3436;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .theme-dark .feature-card {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ddd;
+        }
+
+        .theme-dark .feature-card:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            color: #2d3436;
+            transition: all 0.3s ease;
+        }
+
+        .theme-dark .content-section {
+            background: rgba(0, 0, 0, 0.2);
+            color: #ddd;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(255, 255, 255, 0.3);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .monetization {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">🎨 Creative Hub</div>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="showSection('home')" id="nav-home">Home</a></li>
+                    <li><a href="#stories" onclick="showSection('stories')" id="nav-stories">Stories</a></li>
+                    <li><a href="#art" onclick="showSection('art')" id="nav-art">Art Gallery</a></li>
+                    <li><a href="#upload" onclick="showSection('upload')" id="nav-upload">Upload</a></li>
+                    <li><a href="#monetize" onclick="showSection('monetize')" id="nav-monetize">Monetize</a></li>
+                </ul>
+                <div class="theme-toggle">
+                    <button class="theme-switch" onclick="toggleTheme()" id="theme-toggle">🌙 Dark Mode</button>
+                </div>
+                <div class="lang-options">
+                    <button class="lang-switch" onclick="setLanguage('en')" id="lang-en">EN</button>
+                    <button class="lang-switch" onclick="setLanguage('zh-cn')" id="lang-cn">简体</button>
+                    <button class="lang-switch" onclick="setLanguage('zh-tw')" id="lang-tw">繁體</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="hero">
+                <h1 id="hero-title">Share Your Creative Stories & Art</h1>
+                <p id="hero-subtitle">A multilingual platform for writers and artists to share, collaborate, and monetize their creative work</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showSection('upload')">Start Creating</button>
+                    <button class="btn btn-secondary" onclick="showSection('stories')">Browse Stories</button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3 id="feature-stories-title">Share Stories</h3>
+                    <p id="feature-stories-desc">Upload and share your short stories in multiple languages with beautiful formatting and cover art.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 id="feature-art-title">Art Gallery</h3>
+                    <p id="feature-art-desc">Display your artwork, fan art, and story covers. Allow others to use your art with proper attribution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 id="feature-monetize-title">Monetization</h3>
+                    <p id="feature-monetize-desc">Set up tip jars, commissioned work, and premium content to earn from your creative talents.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 id="feature-multilang-title">Multilingual</h3>
+                    <p id="feature-multilang-desc">Full support for English, Simplified Chinese, and Traditional Chinese content with easy language switching.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stories Section -->
+        <section id="stories" class="section hidden">
+            <div class="content-section">
+                <h2>Story Library</h2>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23667eea'/><text x='100' y='100' fill='white' text-anchor='middle' dy='7' font-size='16'>Story Cover</text></svg>" alt="Story Cover">
+                        <h4>Sample Story Title</h4>
+                        <p>A short description of the story...</p>
+                        <div style="margin-top: 1rem;">
+                            <span style="background: rgba(255,255,255,0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Fiction</span>
+                            <span style="background: rgba(255,255,255,0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">English</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23764ba2'/><text x='100' y='100' fill='white' text-anchor='middle' dy='7' font-size='16'>故事封面</text></svg>" alt="Story Cover">
+                        <h4>示例故事标题</h4>
+                        <p>故事的简短描述...</p>
+                        <div style="margin-top: 1rem;">
+                            <span style="background: rgba(255,255,255,0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">幻想</span>
+                            <span style="background: rgba(255,255,255,0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">繁體中文</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Art Gallery Section -->
+        <section id="art" class="section hidden">
+            <div class="content-section">
+                <h2>Art Gallery</h2>
+                <p>Browse and download copyright-free artwork for your stories and projects.</p>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%23ff6b6b'/><text x='100' y='90' fill='white' text-anchor='middle' dy='7' font-size='14'>Fantasy Art</text><text x='100' y='110' fill='white' text-anchor='middle' dy='7' font-size='12'>CC0 License</text></svg>" alt="Fantasy Art">
+                        <h4>Fantasy Landscape</h4>
+                        <p>Free to use • CC0 License</p>
+                        <button class="btn btn-primary" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">Download</button>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='%2311998e'/><text x='100' y='90' fill='white' text-anchor='middle' dy='7' font-size='14'>Character Art</text><text x='100' y='110' fill='white' text-anchor='middle' dy='7' font-size='12'>Attribution</text></svg>" alt="Character Art">
+                        <h4>Character Design</h4>
+                        <p>Attribution Required</p>
+                        <button class="btn btn-primary" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload" class="section hidden">
+            <div class="content-section">
+                <h2>Upload Your Creative Work</h2>
+                
+                <div class="form-group">
+                    <label>Content Type:</label>
+                    <select id="contentType" onchange="toggleUploadForm()">
+                        <option value="story">Short Story</option>
+                        <option value="art">Artwork/Cover</option>
+                    </select>
+                </div>
+
+                <div id="storyForm">
+                    <div class="form-group">
+                        <label>Story Title:</label>
+                        <input type="text" placeholder="Enter your story title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Language:</label>
+                        <select>
+                            <option value="en">English</option>
+                            <option value="zh-cn">简体中文 (Simplified Chinese)</option>
+                            <option value="zh-tw">繁體中文 (Traditional Chinese)</option>
+                            <option value="multilingual">Multilingual</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Genre:</label>
+                        <select>
+                            <option value="fiction">Fiction</option>
+                            <option value="fantasy">Fantasy</option>
+                            <option value="romance">Romance</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="sci-fi">Science Fiction</option>
+                            <option value="horror">Horror</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Story Content:</label>
+                        <textarea rows="10" placeholder="Paste your story here..."></textarea>
+                    </div>
+                    
+                    <div class="upload-area" onclick="document.getElementById('coverUpload').click()">
+                        <input type="file" id="coverUpload" style="display: none;" accept="image/*">
+                        <p>📸 Click to upload cover art</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Drag and drop or click to browse</p>
+                    </div>
+                </div>
+
+                <div id="artForm" class="hidden">
+                    <div class="form-group">
+                        <label>Artwork Title:</label>
+                        <input type="text" placeholder="Enter artwork title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>License Type:</label>
+                        <select>
+                            <option value="cc0">CC0 - Public Domain</option>
+                            <option value="cc-by">CC BY - Attribution Required</option>
+                            <option value="cc-by-sa">CC BY-SA - Attribution + Share Alike</option>
+                            <option value="rights-reserved">All Rights Reserved</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select>
+                            <option value="character">Character Design</option>
+                            <option value="landscape">Landscape</option>
+                            <option value="cover">Book/Story Cover</option>
+                            <option value="fanart">Fan Art</option>
+                            <option value="abstract">Abstract</option>
+                        </select>
+                    </div>
+                    
+                    <div class="upload-area" onclick="document.getElementById('artUpload').click()">
+                        <input type="file" id="artUpload" style="display: none;" accept="image/*">
+                        <p>🎨 Click to upload your artwork</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Supports JPG, PNG, GIF, SVG</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea rows="4" placeholder="Describe your work..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Tags (comma separated):</label>
+                    <input type="text" placeholder="fantasy, adventure, magic, original">
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Publish Your Work</button>
+            </div>
+        </section>
+
+        <!-- Monetization Section -->
+        <section id="monetize" class="section hidden">
+            <div class="monetization">
+                <h2>💰 Monetize Your Creative Work</h2>
+                <p style="margin-bottom: 2rem;">Turn your passion into income with multiple revenue streams:</p>
+                
+                <div class="features">
+                    <div class="feature-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="feature-icon">☕</div>
+                        <h3>Tip Jar</h3>
+                        <p>Let readers support you with small donations. Perfect for building a fan base.</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;">Set Up Tips</button>
+                    </div>
+                    
+                    <div class="feature-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Commissions</h3>
+                        <p>Offer custom artwork and story writing services to other users.</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;">Open Commissions</button>
+                    </div>
+                    
+                    <div class="feature-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="feature-icon">⭐</div>
+                        <h3>Premium Content</h3>
+                        <p>Create exclusive stories and art for paying subscribers.</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;">Go Premium</button>
+                    </div>
+                    
+                    <div class="feature-card" style="background: rgba(255,255,255,0.1);">
+                        <div class="feature-icon">📚</div>
+                        <h3>Story Bundles</h3>
+                        <p>Sell collections of your stories as downloadable packages.</p>
+                        <button class="btn btn-secondary" style="margin-top: 1rem;">Create Bundle</button>
+                    </div>
+                </div>
+
+                <div class="content-section" style="margin-top: 2rem; background: rgba(255,255,255,0.1);">
+                    <h3>💳 Payment Setup</h3>
+                    <div class="form-group">
+                        <label>PayPal Email:</label>
+                        <input type="email" placeholder="your-paypal@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Ko-fi Username:</label>
+                        <input type="text" placeholder="your-kofi-username">
+                    </div>
+                    <div class="form-group">
+                        <label>Patreon Link:</label>
+                        <input type="url" placeholder="https://patreon.com/yourusername">
+                    </div>
+                    <button class="btn btn-primary">Save Payment Info</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        let currentLanguage = 'en';
+        let isDarkMode = false;
+        
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const toggleBtn = document.getElementById('theme-toggle');
+            
+            if (isDarkMode) {
+                document.body.classList.add('theme-dark');
+                toggleBtn.textContent = '☀️ Light Mode';
+                localStorage.setItem('theme-mode', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                toggleBtn.textContent = '🌙 Dark Mode';
+                localStorage.setItem('theme-mode', 'light');
+            }
+        }
+        
+        // Auto-detect time for dark mode suggestion
+        function suggestDarkModeAtNight() {
+            const hour = new Date().getHours();
+            if ((hour >= 20 || hour <= 6) && !isDarkMode) {
+                // Suggest dark mode for night time (8 PM - 6 AM)
+                setTimeout(() => {
+                    if (confirm('It\'s nighttime! Switch to dark mode for comfortable reading?')) {
+                        toggleTheme();
+                    }
+                }, 3000);
+            }
+        }
+        
+        const translations = {
+            en: {
+                'hero-title': 'Share Your Creative Stories & Art',
+                'hero-subtitle': 'A multilingual platform for writers and artists to share, collaborate, and monetize their creative work',
+                'nav-home': 'Home',
+                'nav-stories': 'Stories',
+                'nav-art': 'Art Gallery',
+                'nav-upload': 'Upload',
+                'nav-monetize': 'Monetize',
+                'feature-stories-title': 'Share Stories',
+                'feature-stories-desc': 'Upload and share your short stories in multiple languages with beautiful formatting and cover art.',
+                'feature-art-title': 'Art Gallery',
+                'feature-art-desc': 'Display your artwork, fan art, and story covers. Allow others to use your art with proper attribution.',
+                'feature-monetize-title': 'Monetization',
+                'feature-monetize-desc': 'Set up tip jars, commissioned work, and premium content to earn from your creative talents.',
+                'feature-multilang-title': 'Multilingual',
+                'feature-multilang-desc': 'Full support for English, Simplified Chinese, and Traditional Chinese content with easy language switching.',
+                'cta-create': 'Start Creating',
+                'cta-browse': 'Browse Stories'
+            },
+            'zh-cn': {
+                'hero-title': '分享您的创意故事和艺术作品',
+                'hero-subtitle': '一个多语言平台，供作家和艺术家分享、合作并将创作变现',
+                'nav-home': '首页',
+                'nav-stories': '故事',
+                'nav-art': '艺术画廊',
+                'nav-upload': '上传',
+                'nav-monetize': '变现',
+                'feature-stories-title': '分享故事',
+                'feature-stories-desc': '以多种语言上传和分享您的短篇故事，配有精美的格式和封面艺术。',
+                'feature-art-title': '艺术画廊',
+                'feature-art-desc': '展示您的艺术作品、同人画和故事封面。允许他人在适当归属下使用您的艺术作品。',
+                'feature-monetize-title': '变现',
+                'feature-monetize-desc': '设置打赏、委托作品和付费内容，从您的创意才能中获得收入。',
+                'feature-multilang-title': '多语言',
+                'feature-multilang-desc': '全面支持英语、简体中文和繁体中文内容，轻松切换语言。',
+                'cta-create': '开始创作',
+                'cta-browse': '浏览故事'
+            },
+            'zh-tw': {
+                'hero-title': '分享您的創意故事和藝術作品',
+                'hero-subtitle': '一個多語言平台，供作家和藝術家分享、合作並將創作變現',
+                'nav-home': '首頁',
+                'nav-stories': '故事',
+                'nav-art': '藝術畫廊',
+                'nav-upload': '上傳',
+                'nav-monetize': '變現',
+                'feature-stories-title': '分享故事',
+                'feature-stories-desc': '以多種語言上傳和分享您的短篇故事，配有精美的格式和封面藝術。',
+                'feature-art-title': '藝術畫廊',
+                'feature-art-desc': '展示您的藝術作品、同人畫和故事封面。允許他人在適當歸屬下使用您的藝術作品。',
+                'feature-monetize-title': '變現',
+                'feature-monetize-desc': '設置打賞、委託作品和付費內容，從您的創意才能中獲得收入。',
+                'feature-multilang-title': '多語言',
+                'feature-multilang-desc': '全面支持英語、簡體中文和繁體中文內容，輕鬆切換語言。',
+                'cta-create': '開始創作',
+                'cta-browse': '瀏覽故事'
+            }
+        };
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.style.background = 'none';
+            });
+            
+            const activeLink = document.querySelector(`[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.style.background = 'rgba(255, 255, 255, 0.2)';
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active language button
+            document.querySelectorAll('.lang-switch').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang === 'zh-cn' ? 'cn' : lang === 'zh-tw' ? 'tw' : 'en'}`).classList.add('active');
+            
+            // Update all translatable elements
+            const langTranslations = translations[lang];
+            if (langTranslations) {
+                Object.keys(langTranslations).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.textContent = langTranslations[key];
+                    }
+                });
+            }
+        }
+
+        function toggleUploadForm() {
+            const contentType = document.getElementById('contentType').value;
+            const storyForm = document.getElementById('storyForm');
+            const artForm = document.getElementById('artForm');
+            
+            if (contentType === 'story') {
+                storyForm.classList.remove('hidden');
+                artForm.classList.add('hidden');
+            } else {
+                storyForm.classList.add('hidden');
+                artForm.classList.remove('hidden');
+            }
+        }
+
+        // File upload handlers
+        document.getElementById('coverUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadArea = e.target.parentElement;
+                uploadArea.innerHTML = `<p>✅ ${file.name} uploaded successfully!</p>`;
+                uploadArea.style.background = 'rgba(72, 187, 120, 0.2)';
+            }
+        });
+
+        document.getElementById('artUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadArea = e.target.parentElement;
+                uploadArea.innerHTML = `<p>✅ ${file.name} uploaded successfully!</p>`;
+                uploadArea.style.background = 'rgba(72, 187, 120, 0.2)';
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('home');
+            setLanguage('en'); // Set default language
+            
+            // Load saved theme preference or use normal
+            const savedTheme = localStorage.getItem('preferred-theme') || 'normal';
+            setTheme(savedTheme);
+            
+            // Suggest theme based on time after 3 seconds
+            setTimeout(suggestThemeByTime, 3000);
+        });
+    </script>
+</body>
+</html>
